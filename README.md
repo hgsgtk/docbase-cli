@@ -1,4 +1,4 @@
-# First
+# Outline
 This is a command line interface application which handle [DocBase](https://docbase.io/) api.
 
 ## What is DocBase
