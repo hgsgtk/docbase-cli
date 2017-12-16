@@ -26,3 +26,9 @@ This is a command line interface application which handle [DocBase](https://docb
 - post (メモの投稿）
 - config （自分のアクセスキーの登録）
 
+#### ToDo
+- [x] --helpでUSAGEを出力する
+- [ ] APIクライアントの作成（hyper）
+
+# References
+- [Rust のコマンドラインオプション解析色々](http://ubnt-intrepid.hatenablog.com/entry/rust_commandline_parsers)
