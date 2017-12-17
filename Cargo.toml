@@ -13,3 +13,6 @@ hyper = "0.11"
 tokio-core = "0.1"
 hyper-tls = "0.1.2"
 dotenv = "0.10.1"
+
+[dependencies.jsonway]
+git = "https://github.com/rustless/jsonway"

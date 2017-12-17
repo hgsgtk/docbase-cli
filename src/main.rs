@@ -8,10 +8,11 @@ use docopt::Docopt;
 use docbase::Docbase;
 
 const USAGE: &'static str = "
-to use DocBase cli
+DocBase API Command Line Interface Application
+
 USAGE:
     docbase-cli
-    docbase-cli post
+    docbase-cli post <post-file-path>... <post-title>...
     docbase-cli (-h | --help)
     docbase-cli --version
 
@@ -23,6 +24,8 @@ Options:
 #[derive(Debug, Deserialize)]
 pub struct Args {
     cmd_post: bool,
+    arg_post_file_path: Vec<String>,
+    arg_post_title: Vec<String>,
 }
 
 
