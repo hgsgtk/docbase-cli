@@ -28,7 +28,12 @@ This is a command line interface application which handle [DocBase](https://docb
 
 #### ToDo
 - [x] --helpでUSAGEを出力する
-- [ ] APIクライアントの作成（hyper）
+- [x] APIクライアントの作成（hyper）
+- [ ] docoptからapiを呼び出す
+
+- [ ] 複数ドメインに所属している場合の挙動
+- [ ] ローカルのmdファイルをpostに投げる:
+
 
 # References
 - [Rust のコマンドラインオプション解析色々](http://ubnt-intrepid.hatenablog.com/entry/rust_commandline_parsers)
