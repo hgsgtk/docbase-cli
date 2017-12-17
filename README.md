@@ -1,39 +1,47 @@
-# Outline
-This is a command line interface application which handle [DocBase](https://docbase.io/) api.
+# Docbase-cli
+This package provides a unified command line [DocBase](https://docbase.io/).
 
-## What is DocBase
-[DocBase](https://docbase.io/) is a document sharing service for team.  
+Attention!
 
-- [API Document](https://help.docbase.io/posts/45703)
+Now the version is 0.1. If you have an idea to improve it, Please share ideas in Issues.
 
-## Basic Design
-### Interface
-#### API can use this features.
-- メモの検索
-- 所属チーム取得
-- 所属グループ取得
-- タグの取得
-- メモの投稿
-- メモの詳細取得
-- メモの更新
-- メモの削除
-- コメント投稿
-- コメント削除
-- ファイルアップロード
+## How to use
 
-#### Command Line Interface
-##### Phase-1
-- post (メモの投稿）
-- config （自分のアクセスキーの登録）
+```
+$ docbase-cli -h
 
-#### ToDo
-- [x] --helpでUSAGEを出力する
-- [x] APIクライアントの作成（hyper）
-- [ ] docoptからapiを呼び出す
+DocBase API Command Line Interface Application
 
-- [ ] 複数ドメインに所属している場合の挙動
-- [ ] ローカルのmdファイルをpostに投げる:
+USAGE:
+    docbase-cli
+    docbase-cli post <post-file-path>... <post-title>...
+    docbase-cli (-h | --help)
+    docbase-cli --version
 
+Options:
+    -h, --help      Show this screen.
+    --version       Show version.
+```
 
-# References
-- [Rust のコマンドラインオプション解析色々](http://ubnt-intrepid.hatenablog.com/entry/rust_commandline_parsers)
+## Installation
+To install, you need to setup rust environment.
+
+```
+$ git clone git@github.com:Khigashiguchi/docbase-cli.git
+$ cd docbase-cli
+$ cargo build
+```
+
+## Getting Started
+Before using docbase-cli, you need to tell it about your DOCBASE credentials.  
+You can do this in several ways
+
+- Environment variables
+- Config file(developing)
+
+To use environment variables do the follwing:
+
+```
+$ echo DOCBASE_TOKEN=<api-token>
+```
+
