@@ -2,18 +2,24 @@ extern crate hyper;
 extern crate hyper_tls;
 extern crate tokio_core;
 extern crate futures;
-extern crate serde_json;
 extern crate dotenv;
+extern crate serde;
+extern crate serde_json;
+extern crate jsonway;
 
 use std::env;
+use std::error::Error;
+use std::fs::File;
+use std::io::prelude::*;
+use std::path::Path;
 use self::hyper::Client;
 use self::hyper::{Method, Request};
 use self::hyper::header::{ContentType};
 use self::hyper_tls::HttpsConnector;
 use self::tokio_core::reactor::Core;
-use self::serde_json::Value;
 use self::dotenv::dotenv;
 use self::futures::{Future, Stream};
+use serde_json::Value;
 use super::Args;
 
 pub struct Docbase {
@@ -46,14 +52,38 @@ impl Docbase {
             .connector(HttpsConnector::new(1, &handle).unwrap())
             .build(&handle);
 
+        let path = Path::new("hello.md");
+        let display = path.display();
+
+        let mut file = match File::open(&path) {
+            Err(why) => panic!("Couldn't open {}: {}", display, Error::description(&why)),
+            Ok(file) => file,
+        };
+
+        let mut s = String::new();
+        let title = "Test title";
+        let body = match file.read_to_string(&mut s) {
+            Err(why) => panic!("Couldn't read {}: {}", display, Error::description(&why)),
+            Ok(_) => s
+        };
+
+        let json = jsonway::object(|json| {
+            json.set("title", title.to_string());
+            json.set("body", body.to_string());
+            json.set("draft", "true".to_string());
+            //json.set("tags", ["tag1", "tag2"]);
+            //json.set("scope", "everyone".to-string());
+        }).unwrap().to_string();
+        /*
         let json = r#"{
             "title": "test post from cli",
-	        "body": "This is the test post from cli written in Rustlang.",
-	        "draft": true,
-	        "tags": ["tag1", "tag2"],
-	        "scope": "everyone",
-	        "notice": false
+            "body":  body,
+            "draft": true,
+            "tags": ["tag1", "tag2"],
+            "scope": "everyone",
+            "notice": false
         }"#;
+        */
 
         let uri = docbase_uri.parse().unwrap();
         let mut req = Request::new(Method::Post, uri);
