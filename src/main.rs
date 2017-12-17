@@ -1,7 +1,6 @@
 #[macro_use]
 extern crate serde_derive;
 extern crate docopt;
-extern crate serde_json;
 
 mod docbase;
 
@@ -12,7 +11,7 @@ const USAGE: &'static str = "
 to use DocBase cli
 USAGE:
     docbase-cli
-    docbase-cli post
+    docbase-cli post <post-file-path>...
     docbase-cli (-h | --help)
     docbase-cli --version
 
@@ -24,6 +23,7 @@ Options:
 #[derive(Debug, Deserialize)]
 pub struct Args {
     cmd_post: bool,
+    arg_post_file_path: Vec<String>,
 }
 
 

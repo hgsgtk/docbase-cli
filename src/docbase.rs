@@ -19,7 +19,7 @@ use self::hyper_tls::HttpsConnector;
 use self::tokio_core::reactor::Core;
 use self::dotenv::dotenv;
 use self::futures::{Future, Stream};
-use serde_json::Value;
+use self::serde_json::Value;
 use super::Args;
 
 pub struct Docbase {
@@ -31,14 +31,14 @@ impl Docbase {
     }
     pub fn run(&mut self, args: Args) {
         if args.cmd_post {
-            self.execute_post();
+            self.execute_post(args.arg_post_file_path);
         } else {
             println!("{:?}", args);
         }
     }
 
     // TODO: リファクタリング、APIリクエスト部分の共通化
-    fn execute_post(&self) {
+    fn execute_post(&self, post_file_path: Vec<String>) {
         let docbase_domain = get_domain();
 
         dotenv().ok();
@@ -52,7 +52,8 @@ impl Docbase {
             .connector(HttpsConnector::new(1, &handle).unwrap())
             .build(&handle);
 
-        let path = Path::new("hello.md");
+        let post_file = &post_file_path[0];
+        let path = Path::new(post_file);
         let display = path.display();
 
         let mut file = match File::open(&path) {
