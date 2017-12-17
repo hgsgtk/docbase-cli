@@ -41,7 +41,8 @@ impl Docbase {
     fn execute_post(&self, post_file_path: Vec<String>, post_title: Vec<String>) {
         let docbase_domain = get_domain();
 
-        dotenv().ok();
+        //TODO: .envをパスを指定して読み込む
+        //dotenv::dotenv().expect("Failed to read .env file.");
         let docbase_base_uri = "https://api.docbase.io/teams/";
         let docbase_uri = format!("{}{}{}", docbase_base_uri, docbase_domain, "/posts");
         let docbase_token = env::var("DOCBASE_TOKEN").unwrap();
