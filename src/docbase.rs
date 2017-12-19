@@ -2,8 +2,6 @@ extern crate hyper;
 extern crate hyper_tls;
 extern crate tokio_core;
 extern crate futures;
-extern crate dotenv;
-extern crate serde;
 extern crate serde_json;
 extern crate jsonway;
 
@@ -17,7 +15,6 @@ use self::hyper::{Method, Request};
 use self::hyper::header::{ContentType};
 use self::hyper_tls::HttpsConnector;
 use self::tokio_core::reactor::Core;
-use self::dotenv::dotenv;
 use self::futures::{Future, Stream};
 use self::serde_json::Value;
 use super::Args;
@@ -41,8 +38,6 @@ impl Docbase {
     fn execute_post(&self, post_file_path: Vec<String>, post_title: Vec<String>) {
         let docbase_domain = get_domain();
 
-        //TODO: .envをパスを指定して読み込む
-        //dotenv::dotenv().expect("Failed to read .env file.");
         let docbase_base_uri = "https://api.docbase.io/teams/";
         let docbase_uri = format!("{}{}{}", docbase_base_uri, docbase_domain, "/posts");
         let docbase_token = env::var("DOCBASE_TOKEN").unwrap();
@@ -72,7 +67,7 @@ impl Docbase {
         let json = jsonway::object(|json| {
             json.set("title", title.to_string());
             json.set("body", body.to_string());
-            json.set("draft", "true".to_string()); //TODO: true/falseをargumemtで指定可能にする
+            json.set("draft", "false".to_string()); //TODO: true/falseをargumemtで指定可能にする
             //json.set("tags", ["tag1", "tag2"]); //TODO: tag付けのI/F検討
             //json.set("scope", "everyone".to-string()); //TODO: scope定義の検討
         }).unwrap().to_string();
@@ -98,7 +93,7 @@ impl Docbase {
 
 fn get_domain() -> String {
     // TODO: .envファイルが存在しない場合のエラーハンドリング
-    dotenv().ok();
+    // dotenv().ok();
     let docbase_uri = "https://api.docbase.io/teams";
     let docbase_token = env::var("DOCBASE_TOKEN").unwrap();
 
