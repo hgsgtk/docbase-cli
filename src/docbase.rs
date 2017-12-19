@@ -92,11 +92,13 @@ impl Docbase {
 }
 
 fn get_domain() -> String {
-    // TODO: .envファイルが存在しない場合のエラーハンドリング
-    // dotenv().ok();
+    execute_https_request();
+    env::var("DOCBASE_DOMAIN").unwrap().replace("\"", "")
+}
+
+fn execute_https_request() {
     let docbase_uri = "https://api.docbase.io/teams";
     let docbase_token = env::var("DOCBASE_TOKEN").unwrap();
-
     let mut core = Core::new().unwrap();
     let handle = core.handle();
     let client = Client::configure()
@@ -117,5 +119,6 @@ fn get_domain() -> String {
         })
     });
     core.run(get).unwrap();
-    env::var("DOCBASE_DOMAIN").unwrap().replace("\"", "")
+    env::var("DOCBASE_DOMAIN").unwrap().replace("\"", "");
 }
+
